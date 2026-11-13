@@ -18,9 +18,9 @@ const CONFIG = {
   photos: [
     { src: "mole.jpeg", caption: "Lovers In MOLEN" },
     { src: "papelo.jpeg", caption: "Menamatkan game susah :)" },
-    { src: "", caption: "Kita dan senja" },
-    { src: "", caption: "Selalu ingin pulang padamu" },
-    { src: "", caption: "Tawa yang kusimpan" },
+    { src: "roblox.jpeg", caption: "Moment Roblox" },
+    { src: "mirip.jpeg", caption: "Miripp" },
+    { src: "10jam.jpeg", caption: "Sleep Call :)" },
     { src: "", caption: "Bersamamu, cukup" }
   ],
 
@@ -37,7 +37,7 @@ ${"Abrar"}`,
 
   loveMessages: [
     "Aku sayang kamu lebih dari siapapun.",
-    "Kamu adalah doa yang diam-diam dikabulkan.",
+    "Kamu adalah Orang yang selama ini aku impikan.",
     "Bersamamu, duniaku terasa jadi tenang",
     "Sebanyak bintang yang menemani malam kita.",
     "Kamu alasan senyumku tiap pagi.",
