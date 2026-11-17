@@ -5,6 +5,9 @@ const CONFIG = {
   nameA: "Abrar",
   nameB: "Stevani",
   startDate: "2026-10-19T22:30:00",   // Tanggal jadian (format: YYYY-MM-DDTHH:MM:SS)
+  password: "19102026",                // Jawaban yang benar (tanggal jadian, DDMMYYYY)
+  decoys: ["09092026", "18092026", "19012026"],  // Pilihan jawaban salah
+  youtubeUrl: "",                      // Tempel link YouTube di sini, mis. "https://www.youtube.com/watch?v=XXXXXXXXXXX"
   musicSrc: "",                        // Isi mis. "music.mp3" untuk lagu sendiri; kosong = musik lembut bawaan
 
   timeline: [
@@ -26,11 +29,17 @@ const CONFIG = {
 
   letter: `Untuk kamu, yang selalu kusebut rumah,
 
-Terima kasih sudah hadir dalam hidupku,aku mungkin belum sempurna, tapi aku ingin kamu tahu: Aku,Sangat ingin membahagiakan panuy apapun ituuu.
+Terima kasih sudah hadir dalam hidupku. Dari sekian banyak pertemuan yang mungkin hanya menjadi persinggahan, entah bagaimana semesta mempertemukanku dengan seseorang sepertimu. Seseorang yang perlahan menjadi bagian dari hari-hariku, menjadi alasan di balik senyum-senyum kecilku, dan menjadi nama yang selalu ingin kusebut dalam setiap doa.
 
-Terima kasih untuk sabarmu, untuk tawamu, dan untuk setiap kali kamu memilih tinggal.
+Aku tahu, aku bukan laki-laki yang sempurna. Masih banyak hal dalam diriku yang perlu diperbaiki, masih banyak sikapku yang mungkin terkadang membuatmu kecewa, dan mungkin ada saatnya aku belum mampu menjadi seperti yang kamu harapkan. Namun, ada satu hal yang ingin selalu kamu yakini: aku sungguh-sungguh ingin membahagiakanmu.
 
-Semoga kita terus tumbuh bersama, pelan-pelan, tapi pasti.
+Aku ingin melihatmu tumbuh, mengejar segala impianmu, merayakan setiap pencapaian kecilmu, bahkan menemanimu melewati kegagalan yang mungkin membuatmu ingin menyerah. Aku tidak ingin menjadi seseorang yang hanya datang untuk menikmati indahnya dirimu, tetapi juga seseorang yang bersedia menemani setiap prosesmu.
+
+Sayangku panuyy, jika suatu hari nanti rambut kita mulai memutih dan wajah kita tak lagi seperti sekarang, aku berharap kita masih menjadi dua orang yang saling menggenggam tangan. Masih saling bercerita tentang hal-hal kecil, masih saling menggoda, dan masih menemukan alasan untuk jatuh cinta kepada orang yang sama.
+
+Aku tidak bisa menjanjikan bahwa perjalanan kita akan selalu mudah. Akan ada perbedaan, kesalahpahaman, dan hari-hari ketika kesabaran kita diuji. Tetapi aku ingin kita selalu punya alasan untuk kembali saling memahami, bukan mencari alasan untuk saling meninggalkan.
+
+Aku tidak hanya ingin mencintaimu hari ini. Aku ingin terus belajar mencintaimu dengan lebih baik pada hari esok, lusa, dan hari-hari yang bahkan belum pernah kita bayangkan.
 
 Dengan segenap sayang,
 ${"Abrar"}`,
@@ -111,6 +120,35 @@ const music = (() => {
 
 const musicBtn = $("musicBtn");
 musicBtn.addEventListener("click", () => musicBtn.classList.toggle("muted", !music.toggle()));
+
+/* ---------- 0. Gate: password pilihan ganda ---------- */
+(function gate() {
+  const box = $("gateOpts"), hint = $("gateHint");
+  [CONFIG.password, ...CONFIG.decoys].sort(() => Math.random() - 0.5).forEach(v => {
+    const b = document.createElement("button");
+    b.className = "opt"; b.textContent = v;
+    b.addEventListener("click", () => {
+      if (v === CONFIG.password) {
+        b.classList.add("right");
+        hint.textContent = "Benar! ♡ Kamu memang ingat.";
+        setTimeout(() => { $("gate").hidden = true; $("openBtn").hidden = false; }, 1000);
+      } else {
+        b.classList.add("wrong"); b.disabled = true;
+        hint.textContent = "Hmm, bukan itu… coba ingat lagi ya 🥺";
+      }
+    });
+    box.appendChild(b);
+  });
+})();
+
+/* ---------- Hati kecil muncul di setiap sentuhan/klik ---------- */
+document.addEventListener("click", e => {
+  const h = document.createElement("span");
+  h.className = "ck"; h.textContent = "♥";
+  h.style.cssText = `left:${e.clientX}px;top:${e.clientY}px;font-size:${rand(14, 24)}px`;
+  document.body.appendChild(h);
+  setTimeout(() => h.remove(), 900);
+});
 
 /* ---------- 1. Opening ---------- */
 $("openBtn").addEventListener("click", () => {
@@ -208,6 +246,15 @@ $("yesBtn").addEventListener("click", () => {
     setTimeout(() => c.remove(), 6500);
   }
   const m = $("finalMsg"); m.textContent = CONFIG.finalMessage;
+  $("noBtn").hidden = true;
+  // Video YouTube: ambil ID dari link, lalu tampilkan (musik latar dihentikan agar tidak bentrok)
+  const id = (CONFIG.youtubeUrl.match(/(?:v=|youtu\.be\/|embed\/|shorts\/)([\w-]{11})/) || [])[1];
+  if (id && $("videoWrap").hidden) {
+    music.stop(); musicBtn.classList.add("muted");
+    $("videoWrap").innerHTML = `<iframe src="https://www.youtube.com/embed/${id}?autoplay=1&rel=0" title="Video untukmu" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>`;
+    $("videoWrap").hidden = false;
+    setTimeout(() => $("videoWrap").scrollIntoView({ behavior: "smooth", block: "center" }), 1200);
+  }
   requestAnimationFrame(() => m.classList.add("show"));
 });
 
@@ -218,3 +265,15 @@ function observeReveals() {
   }), { threshold: 0.15 });
   document.querySelectorAll(".reveal, .section > .title, .section > .lead").forEach(el => { el.classList.add("reveal"); io.observe(el); });
 }
+
+/* ---------- Tombol "pikir dulu" yang menghindar (lucu-lucuan) ---------- */
+(function dodge() {
+  const no = $("noBtn"); let n = 0;
+  const flee = () => {
+    n++;
+    no.style.transform = `translate(${rand(-70, 70)}px,${rand(-50, 50)}px)`;
+    if (n >= 4) no.textContent = "Yaudah, ga bisa kabur 😆";
+  };
+  no.addEventListener("pointerenter", flee);
+  no.addEventListener("click", flee);
+})();

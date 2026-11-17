@@ -22,7 +22,13 @@
     <div class="intro-heart">♡</div>
     <h1>Something Special<br>For You ♡</h1>
     <p>Untuk orang tersayang, Stevani.</p>
-    <button id="openBtn" class="btn">Open Your Surprise</button>
+    <!-- Password pilihan ganda (diisi oleh script.js) -->
+    <div id="gate" class="gate">
+      <p class="gate-q">Sebelum masuk, jawab dulu ya: kapan tanggal jadian kita? ♡<br><small>(format: tanggal-bulan-tahun)</small></p>
+      <div id="gateOpts" class="gate-opts"></div>
+      <p id="gateHint" class="gate-hint"></p>
+    </div>
+    <button id="openBtn" class="btn" hidden>Open Your Surprise</button>
   </div>
 </section>
 
@@ -104,8 +110,13 @@
   <section id="final" class="section final">
     <div class="glass final-card">
       <h2 class="title">Apakah panuy mau bersama selamanya?</h2>
-      <button id="yesBtn" class="btn">MAUUUU! ♡</button>
+      <div class="final-btns">
+        <button id="yesBtn" class="btn">MAUUUU! ♡</button>
+        <button id="noBtn" class="btn ghost">Hmm, pikir dulu</button>
+      </div>
       <p id="finalMsg" class="final-msg"></p>
+      <!-- Video YouTube (muncul setelah tombol MAUUUU diklik) -->
+      <div id="videoWrap" class="video-wrap" hidden></div>
     </div>
     <footer>Made with ♡ just for you</footer>
   </section>
