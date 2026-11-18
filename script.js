@@ -8,7 +8,7 @@ const CONFIG = {
   password: "19102026",                // Jawaban yang benar (tanggal jadian, DDMMYYYY)
   decoys: ["09092026", "18092026", "19012026"],  // Pilihan jawaban salah
   youtubeUrl: "",                      // Tempel link YouTube di sini, mis. "https://www.youtube.com/watch?v=XXXXXXXXXXX"
-  musicSrc: "",                        // Isi mis. "music.mp3" untuk lagu sendiri; kosong = musik lembut bawaan
+  musicSrc: "lala.mp3",                        // Isi mis. "music.mp3" untuk lagu sendiri; kosong = musik lembut bawaan
 
   timeline: [
     { date: "9 September 2026", title: "Pertama Bertemu", text: "Hari yang tak terduga di platform discord" },
