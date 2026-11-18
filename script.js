@@ -24,7 +24,7 @@ const CONFIG = {
     { src: "roblox.jpeg", caption: "Moment Roblox" },
     { src: "mirip.jpeg", caption: "Miripp" },
     { src: "10jam.jpeg", caption: "Sleep Call :)" },
-    { src: "", caption: "Bersamamu, cukup" }
+    { src: "stardew.jpeg", caption: "Berkebun" }
   ],
 
   letter: `Untuk kamu, yang selalu kusebut rumah,
